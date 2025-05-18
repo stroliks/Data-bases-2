@@ -72,3 +72,41 @@ WHERE `rating` > 7.0
 GROUP BY `release_year`
 HAVING COUNT(*) > 5
 ORDER BY COUNT(*) ASC;
+
+
+ -- 3.1.
+ 
+SELECT `genre`, COUNT(*) FROM `Movies`
+GROUP BY `genre`
+HAVING AVG(`rating`) > 6.5 AND COUNT(*) > 2
+ORDER BY AVG(`rating`) DESC;
+
+-- 3.2.
+ 
+SELECT `release_year`, MIN(`rating`) FROM `Movies`
+GROUP BY `release_year`
+HAVING COUNT(*) > 3
+ORDER BY `release_year`;
+
+ -- 3.3.
+ 
+SELECT `Actors`.`name`,`Movie_Actors`.actor_id, COUNT(*) FROM `Movie_Actors`, `Actors`
+WHERE `Movie_Actors`.actor_id = `Actors`.id
+GROUP BY `actor_id`
+HAVING COUNT(*) > 0
+ORDER BY COUNT(*) DESC;
+
+-- 3.4.
+
+SELECT `genre`, AVG(`rating`) FROM `Movies`
+WHERE `release_year` < 2000
+GROUP BY `genre`
+HAVING COUNT(*) > 3
+ORDER BY AVG(`rating`) DESC;
+
+-- 3.5.
+SELECT `genre`, MIN(`rating`) FROM `Movies`
+GROUP BY `genre`
+HAVING COUNT(*) >8
+ORDER BY MIN(`rating`) ASC;
+
