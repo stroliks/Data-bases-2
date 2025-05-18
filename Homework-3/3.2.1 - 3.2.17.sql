@@ -44,4 +44,72 @@ SELECT * FROM `ZootopiaCharacters`
 	ORDER BY `CharacterName` ASC
 	LIMIT 3;
 	
+-- 2.5.
+SELECT * FROM `ZootopiaCharacters`
+GROUP BY `Occupation`
+HAVING (COUNT(*)) = 1
+ORDER BY `Role` DESC; 
+	
+	-- 2.6.
+SELECT * FROM `ZootopiaCharacters`
+WHERE `CharacterName` LIKE '%a%'
+ORDER BY `CharacterName` DESC; 
 
+ -- 2.7.
+ SELECT DISTINCT `Role` FROM `ZootopiaCharacters`
+ ORDER BY `Role` DESC;
+
+-- 2.8.
+SELECT * FROM `ZootopiaCharacters`
+WHERE `Catchphrase` IS NOT NULL
+ORDER BY `CharacterName` ASC
+LIMIT 5;
+
+-- 2.9.
+SELECT * FROM `ZootopiaCharacters`
+WHERE `Role` = 'Второстепенный персонаж'
+ORDER BY `CharacterName` ASC
+LIMIT 1
+OFFSET 2;
+
+-- 2.10.
+SELECT COUNT(*) FROM `ZootopiaCharacters`;
+
+-- 2.11.
+SELECT `Occupation`, COUNT(*) FROM `ZootopiaCharacters`
+GROUP BY `Occupation`;
+
+-- 2.12.
+SELECT `Occupation`, COUNT(*) FROM `ZootopiaCharacters`
+GROUP BY `Occupation`
+ORDER BY COUNT(*) DESC;
+
+-- 2.13.
+SELECT `Species`, COUNT(*) FROM `ZootopiaCharacters`
+WHERE `Role` = 'Главный герой'
+GROUP BY `Species`;
+
+-- 2.14.
+SELECT `CharacterName`, `Occupation` FROM `ZootopiaCharacters`
+GROUP BY `Occupation`
+HAVING COUNT(*) = 1;
+
+-- 2.15.
+SELECT * FROM `ZootopiaCharacters`
+WHERE `Occupation` IS NOT NULL
+ORDER BY `CharacterName` ASC
+LIMIT 5
+OFFSET 5;
+
+-- 2.16.
+SELECT `Occupation`, COUNT(*) FROM `ZootopiaCharacters`
+GROUP BY `Occupation`
+HAVING COUNT(*)>1
+ORDER BY `Occupation` ASC;
+
+-- 2.17.
+SELECT `Species`, COUNT(*) FROM `ZootopiaCharacters`
+WHERE `Catchphrase` IS NULL
+GROUP BY `Species`
+ORDER BY COUNT(*) DESC
+LIMIT 3;
