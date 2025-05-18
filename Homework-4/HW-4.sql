@@ -42,6 +42,9 @@ INSERT INTO `*Courses` (id, course_name, instructor, credit_hours) VALUES
 (103, 'Chemistry', 'Dr. White', 3),
 (104, 'Biology', 'Dr. Green', 4),
 (105, 'History', 'Dr. Black', 2);
+INSERT INTO `*Courses` (id, course_name, instructor, credit_hours) VALUES
+(108, 'Mathematics', 'Dr. Brown', 3),
+(109, 'Biology', 'Dr. White', 4);
 
 -- Заполнение таблицы Enrollments
 INSERT INTO `*Enrollments` (enrollment_id, student_id, course_id, grade) VALUES
@@ -138,13 +141,73 @@ SELECT `first_name` FROM `*Students`
 	NOT IN (
 		SELECT `first_name` FROM `*Students` INNER JOIN `*Enrollments` ON `*Enrollments`.student_id = `*Students`.id
 		WHERE `*Enrollments`.grade = 'C');
+	
+		
+-- 3.1.
+
+SELECT `first_name`, `last_name` FROM `*Students`
+INNER JOIN `*Enrollments` ON `*Enrollments`.student_id = `*Students`.id
+INNER JOIN `*Courses` ON `*Courses`.id = `*Enrollments`.course_id
+WHERE `instructor` = 'Dr. Brown';
+
+-- 3.2.
+
+SELECT `course_name` FROM `*Courses`
+INNER JOIN `*Enrollments` ON `*Courses`.id = `*Enrollments`.course_id
+INNER JOIN `*Students` ON `*Enrollments`.student_id = `*Students`.id
+GROUP BY `course_name`
+HAVING COUNT(*) = 0;
+
+-- 3.3.
+
+SELECT `first_name`, `last_name`, `course_name` FROM `*Students`
+INNER JOIN `*Enrollments` ON `*Enrollments`.student_id = `*Students`.id
+INNER JOIN `*Courses` ON `*Courses`.id = `*Enrollments`.course_id
+WHERE `course_name` IN (
+	SELECT `course_name` FROM `*Courses`
+	GROUP BY `course_name`
+	HAVING COUNT(*)>1);
+	
+-- 3.4.
+SELECT `course_name`, COUNT(*) FROM `*Courses`
+INNER JOIN `*Enrollments` ON `*Courses`.id = `*Enrollments`.course_id
+INNER JOIN `*Students` ON `*Enrollments`.student_id = `*Students`.id
+GROUP BY `course_name`;
+
+-- 3.5.
+
+-- 3.6.
+SELECT `first_name`, `last_name` FROM `*Students`
+INNER JOIN `*Enrollments` ON `*Enrollments`.student_id = `*Students`.id
+INNER JOIN `*Courses` ON `*Courses`.id = `*Enrollments`.course_id
+GROUP BY `*Students`.id
+HAVING COUNT(*)>=2;
+
+-- 3.7.
+SELECT DISTINCT `course_name` FROM `*Courses`
+INNER JOIN `*Enrollments` ON `*Courses`.id = `*Enrollments`.course_id
+INNER JOIN `*Students` ON `*Enrollments`.student_id = `*Students`.id
+WHERE `enrollment_year`=  2022;
 
 
+-- 3.8. 
+SELECT `first_name`, `last_name` FROM `*Students`
+INNER JOIN `*Enrollments` ON `*Enrollments`.student_id = `*Students`.id
+INNER JOIN `*Courses` ON `*Courses`.id = `*Enrollments`.course_id
+WHERE `grade` = 'A'
+GROUP BY `*Students`.id
+HAVING COUNT(*)>=2;
 
+-- 3.9.
 
-
-
-
+SELECT `first_name`, `last_name`, `course_name`, COUNT(*) FROM `*Students`
+INNER JOIN `*Enrollments` ON `*Enrollments`.student_id = `*Students`.id
+INNER JOIN `*Courses` ON `*Courses`.id = `*Enrollments`.course_id
+WHERE `course_name` IN (
+	SELECT `course_name` FROM `*Courses`
+	GROUP BY `course_name`
+	HAVING COUNT(*)>1)
+GROUP BY `*Students`.id;
 
 
 
