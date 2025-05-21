@@ -44,3 +44,82 @@ INSERT INTO `-reviews`(`id_review`,`user_id`,`grade`, `text_review`) VALUES
 		(203, 1, 3, 'Дорого, но качественно'),
 		(204, 3, 2, 'Не удовлетворен сервисом'),
 		(205, 4, 5, 'Супер обслуживание!');
+		
+		
+		
+		
+-- 1.
+
+SELECT `name_user`,`age_user`, `Country` FROM `-Users`
+	INNER JOIN `-Orders` ON `-Orders`.user_id = `-Users`.id_user
+	INNER JOIN `-reviews` ON `-reviews`.user_id = `-Users`.id_user
+	WHERE `-reviews`.grade > 4;
+
+ -- 2.
+
+SELECT `name_user`,`age_user` FROM `-Users`
+	INNER JOIN `-Orders` ON `-Orders`.user_id = `-Users`.id_user
+WHERE `-Orders`.cost_order > 1000;
+
+ -- 3.
+ 
+SELECT `id_order`, `name_user` FROM `-Orders`
+	INNER JOIN `-Users` ON `-Orders`.user_id = `-Users`.id_user;
+ 
+-- 4.
+
+SELECT `name_user`, `Country` FROM `-Users`
+	INNER JOIN `-reviews` ON `-reviews`.user_id = `-Users`.id_user
+	GROUP BY `-reviews`.`user_id`
+	HAVING COUNT(*) > 1;
+
+-- 5.
+SELECT `id_order` FROM `-Orders`
+	INNER JOIN `-Users` ON `-Orders`.user_id = `-Users`.id_user
+	INNER JOIN `-reviews` ON `-reviews`.user_id = `-Users`.id_user
+	WHERE `-reviews`.grade < 3;
+
+-- 6.
+
+SELECT `name_user`, `text_review`, `date_order` FROM `-Users`
+	INNER JOIN `-Orders` ON `-Orders`.user_id = `-Users`.id_user
+	INNER JOIN `-reviews` ON `-reviews`.user_id = `-Users`.id_user
+	WHERE `-Orders`.date_order > '2024-09-01';
+
+ -- 7.
+ SELECT `name_user`, AVG(`-Orders`.cost_order) FROM `-Users`
+	INNER JOIN `-Orders` ON `-Orders`.user_id = `-Users`.id_user
+	GROUP BY `-Orders`.user_id
+	HAVING COUNT(*) > 0;
+	
+
+ -- 8.
+SELECT `name_user`,`age_user`, `Country` FROM `-Users`
+	INNER JOIN `-Orders` ON `-Orders`.user_id = `-Users`.id_user
+	INNER JOIN `-reviews` ON `-reviews`.user_id = `-Users`.id_user
+	WHERE `Country` = 'Россия' AND `-reviews`.grade > 3; 
+
+
+-- 9.
+
+SELECT `name_user` FROM `-Users`
+	LEFT JOIN `-reviews` ON `-reviews`.user_id = `-Users`.id_user
+	WHERE `-reviews`.`user_id` IS NULL;
+
+-- 10.
+
+SELECT `name_user`,`text_review` FROM `-Users`
+	INNER JOIN `-Orders` ON `-Orders`.user_id = `-Users`.id_user
+	INNER JOIN `-reviews` ON `-reviews`.user_id = `-Users`.id_user
+	WHERE `-Orders`.cost_order < 2000;
+
+
+
+
+
+
+
+
+
+
+
